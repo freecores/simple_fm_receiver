@@ -1,4 +1,4 @@
--- $Id: bench.vhdl,v 1.1.1.1 2005-01-04 02:05:56 arif_endro Exp $
+-- $Id: bench.vhdl,v 1.2 2005-01-10 02:33:54 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Test Bench
 -- Project     : FM Receiver 
@@ -6,7 +6,7 @@
 -- File        : bench.vhdl
 -- Author      : "Arif E. Nugroho" <arif_endro@yahoo.com>
 -- Created     : 2004/12/23
--- Last update : 
+-- Last update : 2005/01/08
 -- Simulators  : Modelsim 6.0
 -- Synthesizers: 
 -- Target      : 
@@ -26,16 +26,10 @@ use IEEE.STD_LOGIC_unsigned.ALL;
 entity bench is
 port (
     clock               : in  bit;
-    reset               : in  bit
---  test_signal_fm      : out bit_vector (07 downto 0);
---  test_signal_fmTri   : out bit_vector (07 downto 0);
---  output_fm           : out bit_vector (11 downto 0)
+    reset               : in  bit;
+    output_fm           : out bit_vector (11 downto 0);
+    output_fmTri        : out bit_vector (11 downto 0)
     );
---  port (
---   clock : out bit;
---   fmout : out bit;
---   reset : out bit;
--- );
 end bench;
 
 architecture structural of bench is
@@ -57,23 +51,10 @@ architecture structural of bench is
     );
   end component;
 
---  signal clock       : bit;
---  signal reset       : bit;
   signal test_signal_fm : bit_vector (07 downto 0);
   signal test_signal_fmTri : bit_vector (07 downto 0);
-  signal output_fm   : bit_vector (11 downto 0);
 
   begin
---   reset <= '0';
-
--- process
---	variable run_time : time := 1024ns;
---	begin
---	wait for run_time;
---	clear <= '1';
---	reset <= '1';
---	exit;
--- end process;
 
  myinput : input_fm
    port map (
@@ -82,6 +63,7 @@ architecture structural of bench is
     test_signal_fm   => test_signal_fm,
     test_signal_fmTri=> test_signal_fmTri
     );
+
   myfm : fm
    port map (
     CLK                  => clock,
@@ -89,4 +71,14 @@ architecture structural of bench is
     FMIN                 => test_signal_fm,
     DMOUT (11 downto 0)  => output_fm
     );
+
+  myfmTri : fm
+   port map (
+    CLK                  => clock,
+    RESET                => reset,
+    FMIN                 => test_signal_fmTri,
+    DMOUT (11 downto 0)  => output_fmTri
+    );
+
+
 end structural;
