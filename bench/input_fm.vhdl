@@ -1,4 +1,4 @@
--- $Id: input_fm.vhdl,v 1.3 2005-02-21 06:51:19 arif_endro Exp $
+-- $Id: input_fm.vhdl,v 1.4 2005-03-04 08:03:59 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Input signal FM
 -- Project     : FM Receiver 
@@ -41,13 +41,9 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_logic_arith.all;
 
 entity input_fm is
    port (
---   clear              : in  bit;
---   clock_out          : out bit;
---   counter            : in bit_vector (09 downto 0);
    clock              : in  bit;
    clear              : in  bit;
    test_signal_fm     : out bit_vector (07 downto 0);
@@ -64,14 +60,12 @@ component adder_10bit
 	);
 end component;
 
--- signal clock                 : bit;
--- signal clear                 : bit;
 signal test_signal_fm_int    : bit_vector (07 downto 0);
 signal test_signal_fmTri_int : bit_vector (07 downto 0);
 signal counter               : bit_vector (09 downto 0);
 signal counter_tmp           : bit_vector (10 downto 0);
 signal one_increment         : bit_vector (09 downto 0);
--- signal counter               : bit_vector (09 downto 0);
+
 begin
 
 
@@ -85,22 +79,6 @@ begin
     one_increment (07) <= '0';
     one_increment (08) <= '0';
     one_increment (09) <= '0';
--- process
--- 	variable delay_time : time := 1ns; 
--- 	begin
--- 	wait for delay_time;
---	clock <= not(clock);
--- 	clock <= '0';
--- 	clock <= '1';
--- end process;
-
--- process
---	variable run_time : time := 1024ns;
---	begin
---	wait for run_time;
---	clear <= '1';
---	exit;
--- end process;
 
 counter_one : adder_10bit
     port map (
@@ -111,23 +89,23 @@ counter_one : adder_10bit
     
 process (clock, clear)
 begin
---    if (clear = '1') then
---		counter (09 downto 0) <= (others => B"0000000000");
---    elsif (((clock = '1') and clock'event) and (not(clear = '1')) then
+
     if (clear = '1') then
-    		counter           <= (others => '0');
-		test_signal_fm    <= (others => '0');
-		test_signal_fmTri <= (others => '0');
+    		counter              <= (others => '0');
+		test_signal_fm       <= (others => '0');
+		test_signal_fmTri    <= (others => '0');
     elsif (((clock = '1') and (not( clear = '1'))) and clock'event) then
 		counter(09 downto 0) <= counter_tmp(09 downto 0);
-		-- clock_out         <= clock;
-		test_signal_fm    <= test_signal_fm_int;
-		test_signal_fmTri <= test_signal_fmTri_int;
+		test_signal_fm       <= test_signal_fm_int;
+		test_signal_fmTri    <= test_signal_fmTri_int;
     end if;
+
 end process;
 
 	with counter (09 downto 0) select
+
 	test_signal_fm_int <=
+
 -- START INPUT FM SIGNAL
 
 	B"01111111" when B"0000000000",  -- INDEX 0

@@ -1,4 +1,4 @@
--- $Id: xilinx_fpga.vhdl,v 1.2 2005-02-21 06:51:30 arif_endro Exp $
+-- $Id: xilinx_fpga.vhdl,v 1.3 2005-03-04 08:04:00 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Xilinx FPGA Implementation
 -- Project     : FM Receiver 
@@ -50,7 +50,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.all;
-use IEEE.STD_LOGIC_arith.all;
 
 entity xilinx_fpga is
    port (

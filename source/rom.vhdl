@@ -1,4 +1,4 @@
--- $Id: rom.vhdl,v 1.2 2005-02-21 06:54:54 arif_endro Exp $
+-- $Id: rom.vhdl,v 1.3 2005-03-04 08:06:21 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : ROM
 -- Project     : FM Receiver 
@@ -41,7 +41,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_arith.ALL;
 
 entity rom is
   port (

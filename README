@@ -1,25 +1,30 @@
-$Id: README,v 1.1.1.1 2005-01-04 02:05:54 arif_endro Exp $
+$Id: README,v 1.2 2005-03-04 08:03:10 arif_endro Exp $
 
-Do not edit files in directory export directly
-but changes in source directory then use ALLIANCE tools
-to analyze and sintesis them.
+Do not edit files in directory `export' directly but change the HDL
+source in `source' directory then use ALLIANCE tools to analyze, export
+and sintesis them.
 
-there is three test bench the first (e.g modelsim-bench) is for quick test
-e.g just hit run -all then this will test in one loop
-other can be used for modifying clock signal and 
-applying reset signal to fm.
+There are more than one test bench, the first (e.g modelsim-bench) is
+for quick test e.g just hit `run -all' then this will test in one loop,
+other can be used for modifying clock signal or applying reset signal to
+fm so custom input response can be analyze.
+
 directory layout:
+	
 	source => contain source code development (primary source)
 	export => contain VHDL and VERILOG exportable code that can
-		  be used on many synthesize tools.
-	docs   => contains documents for reports
+		  be synthesized on many synthesizer tools.
+	docs   => contains documentation on FM Receiver
 	bench  => the test bench clock and reset can be modified
-	bench_xil => test bench for Xilinx, this because Xilinx uses
-	          std_logic for signal in synthesized component.
-	modelsim-bench => quick test bench the clock and reset signal is
-		  supplied by testbench (the old one). 
 
-NOTES: the report is better displayed on postscript than pdf format
-       this is may be because the dvipdf driver not produces good pdf file.
-       if you have ghostview or any postscript viewer see the postscript 
-       file to get the best view.
+NOTES: 
+
+The documentation is better displayed on postscript format than in pdf
+format this may be because the dvipdf driver not produces good pdf file.
+if you have ghostview or any postscript viewer see the postscript file
+to get the best view.
+
+
+Arif E. Nugroho
+arif_endro@yahoo.com
+

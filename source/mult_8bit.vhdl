@@ -1,4 +1,4 @@
--- $Id: mult_8bit.vhdl,v 1.2 2005-02-21 06:54:52 arif_endro Exp $
+-- $Id: mult_8bit.vhdl,v 1.3 2005-03-04 08:06:20 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Eight bit multiplier
 -- Project     : FM Receiver 
@@ -41,7 +41,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_arith.ALL;
 
 entity mult_8bit is
    port (

@@ -1,4 +1,4 @@
--- $Id: fm.vhdl,v 1.2 2005-02-21 06:54:44 arif_endro Exp $
+-- $Id: fm.vhdl,v 1.3 2005-03-04 08:06:18 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : FM core component
 -- Project     : FM Receiver 
@@ -41,7 +41,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_arith.ALL;
 
 entity fm is
  port (

@@ -1,4 +1,4 @@
--- $Id: adder_15bit.vhdl,v 1.2 2005-02-21 06:54:36 arif_endro Exp $
+-- $Id: adder_15bit.vhdl,v 1.3 2005-03-04 08:06:16 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 15 bit
 -- Project     : FM Receiver 
@@ -41,7 +41,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_arith.ALL;
 
 entity adder_15bit is
    port (

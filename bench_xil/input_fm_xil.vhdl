@@ -1,4 +1,4 @@
--- $Id: input_fm_xil.vhdl,v 1.2 2005-02-21 06:52:19 arif_endro Exp $
+-- $Id: input_fm_xil.vhdl,v 1.3 2005-03-04 08:04:49 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Input signal FM For Xilinx
 -- Project     : FM Receiver 
@@ -41,7 +41,6 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_logic_arith.all;
 
 entity input_fm is
    port (
