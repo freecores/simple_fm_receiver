@@ -1,4 +1,4 @@
--- $Id: loop_filter.vhdl,v 1.1.1.1 2005-01-04 02:05:58 arif_endro Exp $
+-- $Id: loop_filter.vhdl,v 1.2 2005-02-21 06:28:28 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Loop filter component
 -- Project     : FM Receiver 
@@ -7,15 +7,36 @@
 -- Author      : "Arif E. Nugroho" <arif_endro@yahoo.com>
 -- Created     : 2004/11/12
 -- Last update : 
--- Simulators  : Modelsim 6.0
+-- Simulators  : 
 -- Synthesizers: 
 -- Target      : 
 -------------------------------------------------------------------------------
 -- Description : loop filter in PLL loop
 -------------------------------------------------------------------------------
--- Copyright (c) 2004 Arif E. Nugroho
+-- Copyright (C) 2004 Arif E. Nugroho
 -- This VHDL design file is an open design; you can redistribute it and/or
 -- modify it and/or implement it after contacting the author
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- 
+-- 	THIS SOURCE FILE MAY BE USED AND DISTRIBUTED WITHOUT RESTRICTION
+-- PROVIDED THAT THIS COPYRIGHT STATEMENT IS NOT REMOVED FROM THE FILE AND THAT
+-- ANY DERIVATIVE WORK CONTAINS THE ORIGINAL COPYRIGHT NOTICE AND THE
+-- ASSOCIATED DISCLAIMER.
+-- 
+-------------------------------------------------------------------------------
+-- 
+-- 	THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+-- IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+-- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+-- EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+-- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+-- PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+-- OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+-- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+-- OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+-- ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-- 
 -------------------------------------------------------------------------------
 
 library IEEE;
@@ -55,7 +76,6 @@ architecture structural of loop_filter is
   signal loop_out_back1    : bit_vector (11 downto 0);
   signal multiply_output01 : bit_vector (11 downto 0);
   signal adder_output01    : bit_vector (12 downto 0);
-  signal adder_output01_reg: bit_vector (12 downto 0);
 
   begin
  
@@ -101,46 +121,34 @@ multiply01 : sub_12bit
 
   loop_out_div <= multiply_output01;
 
-  adder_output01_reg (11) <= (adder_output01 (11) and not(clear));
-  adder_output01_reg (10) <= (adder_output01 (10) and not(clear));
-  adder_output01_reg (09) <= (adder_output01 (09) and not(clear));
-  adder_output01_reg (08) <= (adder_output01 (08) and not(clear));
-  adder_output01_reg (07) <= (adder_output01 (07) and not(clear));
-  adder_output01_reg (06) <= (adder_output01 (06) and not(clear));
-  adder_output01_reg (05) <= (adder_output01 (05) and not(clear));
-  adder_output01_reg (04) <= (adder_output01 (04) and not(clear));
-  adder_output01_reg (03) <= (adder_output01 (03) and not(clear));
-  adder_output01_reg (02) <= (adder_output01 (02) and not(clear));
-  adder_output01_reg (01) <= (adder_output01 (01) and not(clear));
-  adder_output01_reg (00) <= (adder_output01 (00) and not(clear));
+  process (clock, clear)
 
-  process (clock)
   begin
 
---if (((clock = '1') and (not (clear = '1'))) and clock'event) then
-  if ((clock = '1') and clock'event) then
--- loop_out (11) <= adder_output01_reg (12);
-   loop_out (11) <= adder_output01_reg (11);
-   loop_out (10) <= adder_output01_reg (10);
-   loop_out (09) <= adder_output01_reg (09);
-   loop_out (08) <= adder_output01_reg (08);
-   loop_out (07) <= adder_output01_reg (07);
-   loop_out (06) <= adder_output01_reg (06);
-   loop_out (05) <= adder_output01_reg (05);
-   loop_out (04) <= adder_output01_reg (04);
-   loop_out (03) <= adder_output01_reg (03);
-   loop_out (02) <= adder_output01_reg (02);
-   loop_out (01) <= adder_output01_reg (01);
-   loop_out (00) <= adder_output01_reg (00);
+  if    (clear = '1') then
 
---  end if;
+	loop_out      <= (others => '0');
 
---  elsif (clear = '1') then -- can't be synhesized in Xilinx
---   loop_out <= (others => '0');
+  elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
+
+	-- loop_out (11) <= adder_output01 (12);
+	loop_out (11) <= adder_output01 (11);
+	loop_out (10) <= adder_output01 (10);
+	loop_out (09) <= adder_output01 (09);
+	loop_out (08) <= adder_output01 (08);
+	loop_out (07) <= adder_output01 (07);
+	loop_out (06) <= adder_output01 (06);
+	loop_out (05) <= adder_output01 (05);
+	loop_out (04) <= adder_output01 (04);
+	loop_out (03) <= adder_output01 (03);
+	loop_out (02) <= adder_output01 (02);
+	loop_out (01) <= adder_output01 (01);
+	loop_out (00) <= adder_output01 (00);
 
   end if;
+
   end process;
 
-  output_loop <= loop_out;
+  output_loop    <= loop_out;
 
 end structural;
