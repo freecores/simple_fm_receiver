@@ -1,4 +1,4 @@
--- $Id: fir.vhdl,v 1.1.1.1 2005-01-04 02:05:58 arif_endro Exp $
+-- $Id: fir.vhdl,v 1.2 2005-02-21 06:36:55 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : FIR Low pass filter
 -- Project     : FM Receiver 
@@ -6,16 +6,37 @@
 -- File        : fir.vhdl
 -- Author      : "Arif E. Nugroho" <arif_endro@yahoo.com>
 -- Created     : 2004/10/30
--- Last update : 2004/12/31
--- Simulators  : Modelsim 6.0
+-- Last update : 
+-- Simulators  : 
 -- Synthesizers: 
 -- Target      : 
 -------------------------------------------------------------------------------
 -- Description : FIR low pass filter
 -------------------------------------------------------------------------------
--- Copyright (c) 2004 Arif E. Nugroho
+-- Copyright (C) 2004 Arif E. Nugroho
 -- This VHDL design file is an open design; you can redistribute it and/or
 -- modify it and/or implement it after contacting the author
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+-- 
+-- 	THIS SOURCE FILE MAY BE USED AND DISTRIBUTED WITHOUT RESTRICTION
+-- PROVIDED THAT THIS COPYRIGHT STATEMENT IS NOT REMOVED FROM THE FILE AND THAT
+-- ANY DERIVATIVE WORK CONTAINS THE ORIGINAL COPYRIGHT NOTICE AND THE
+-- ASSOCIATED DISCLAIMER.
+-- 
+-------------------------------------------------------------------------------
+-- 
+-- 	THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+-- IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+-- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+-- EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+-- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+-- PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+-- OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+-- WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+-- OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+-- ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-- 
 -------------------------------------------------------------------------------
 
 library IEEE;
@@ -203,23 +224,28 @@ adder15 : adder_15bit
   adder15_output              => result_adder15
   );
 
-fir_out(11)    <= (result_adder15(15) and not(clear)); -- 1
-fir_out(10)    <= (result_adder15(15) and not(clear)); -- 1/2
-fir_out(09)    <= (result_adder15(15) and not(clear)); -- 1/4
-fir_out(08)    <= (result_adder15(15) and not(clear)); -- 1/8
-fir_out(07)    <= (result_adder15(15) and not(clear)); -- 1/16
-fir_out(06)    <= (result_adder15(14) and not(clear));
-fir_out(05)    <= (result_adder15(13) and not(clear));
-fir_out(04)    <= (result_adder15(12) and not(clear));
-fir_out(03)    <= (result_adder15(11) and not(clear));
-fir_out(02)    <= (result_adder15(10) and not(clear));
-fir_out(01)    <= (result_adder15(09) and not(clear));
-fir_out(00)    <= (result_adder15(08) and not(clear));
+fir_out(11)    <= (result_adder15(15)); -- 1
+fir_out(10)    <= (result_adder15(15)); -- 1/2
+fir_out(09)    <= (result_adder15(15)); -- 1/4
+fir_out(08)    <= (result_adder15(15)); -- 1/8
+fir_out(07)    <= (result_adder15(15)); -- 1/16
+fir_out(06)    <= (result_adder15(14));
+fir_out(05)    <= (result_adder15(13));
+fir_out(04)    <= (result_adder15(12));
+fir_out(03)    <= (result_adder15(11));
+fir_out(02)    <= (result_adder15(10));
+fir_out(01)    <= (result_adder15(09));
+fir_out(00)    <= (result_adder15(08));
 
-process (clock)
-begin
--- if (((clock = '1') and (not(clear) = '1')) and clock'event) then
-   if ((clock = '1') and clock'event) then
+   process (clock, clear)
+
+   begin
+ 
+   if    (clear = '1') then
+
+	dmout     <= (others => '0');
+
+   elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
 
 	fir_in_02 <= fir_in_01;
 	fir_in_03 <= fir_in_02;
@@ -238,10 +264,9 @@ begin
 	fir_in_16 <= fir_in_15;
 
 	dmout     <= fir_out;
-   
---   elsif (clear = '1') then -- can't be synthesized in Xilinx
---          dmout <= (others => '0');
 
    end if;
-end process;
+   
+   end process;
+   
 end structural;
