@@ -1,8 +1,8 @@
-# $Id: Makefile,v 1.1.1.1 2005-01-04 02:05:55 arif_endro Exp $
+# $Id: Makefile,v 1.2 2005-01-25 04:45:59 arif_endro Exp $
 
-MYFILE = report
+MYFILE = simple_fm_receiver
 
-all            : docs
+all            : docs clean
 
 pdf   : dvi
 	dvipdf $(MYFILE).dvi
@@ -22,15 +22,15 @@ print : dvi
 dvi   : $(MYFILE).tex
 	latex $(MYFILE).tex
 
-docs : pdf ps
+docs : pdf
 	mv -v $(MYFILE).pdf ../
-	mv -v $(MYFILE).ps ../
+#	mv -v $(MYFILE).ps ../
 
 xdvi   : dvi
 	xdvi $(MYFILE).dvi
 
 clean :
-	rm -v -f $(MYFILE).ps $(MYFILE).pdf $(MYFILE).log $(MYFILE).dvi $(MYFILE).aux $(MYFILE).toc 
+	rm -v -f $(MYFILE).log $(MYFILE).dvi $(MYFILE).aux $(MYFILE).toc $(MYFILE).lof
 #	../$(MYFILE).pdf ../$(MYFILE).ps
 real_clean: clean
-	rm -v -f ../$(MYFILE).pdf ../$(MYFILE).ps
+	rm -v -f $(MYFILE).ps $(MYFILE).pdf ../$(MYFILE).pdf ../$(MYFILE).ps
