@@ -1,4 +1,4 @@
--- $Id: fir.vhdl,v 1.3 2005-03-04 08:06:17 arif_endro Exp $
+-- $Id: fir.vhdl,v 1.4 2005-03-12 04:18:38 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : FIR Low pass filter
 -- Project     : FM Receiver 
@@ -6,7 +6,7 @@
 -- File        : fir.vhdl
 -- Author      : "Arif E. Nugroho" <arif_endro@yahoo.com>
 -- Created     : 2004/10/30
--- Last update : 
+-- Last update : 2005/03/11
 -- Simulators  : 
 -- Synthesizers: 
 -- Target      : 
@@ -223,18 +223,27 @@ adder15 : adder_15bit
   adder15_output              => result_adder15
   );
 
+-- FIR constants that have effect on output trasition.
+-- This constant if set to low values (e.g x < 1/8 ) will make 
+-- the transition output more looks like steps, noise will be reduced
+-- but it's loss of fidelity of output signal.
+-- for example:
+-- set values to 1/16 will make the output trasition more look's like step
+-- than an curve.
+-- Just try another values to see the result. ^_^
+
 fir_out(11)    <= (result_adder15(15)); -- 1
-fir_out(10)    <= (result_adder15(15)); -- 1/2
-fir_out(09)    <= (result_adder15(15)); -- 1/4
-fir_out(08)    <= (result_adder15(15)); -- 1/8
-fir_out(07)    <= (result_adder15(15)); -- 1/16
-fir_out(06)    <= (result_adder15(14));
-fir_out(05)    <= (result_adder15(13));
-fir_out(04)    <= (result_adder15(12));
-fir_out(03)    <= (result_adder15(11));
-fir_out(02)    <= (result_adder15(10));
-fir_out(01)    <= (result_adder15(09));
-fir_out(00)    <= (result_adder15(08));
+fir_out(10)    <= (result_adder15(14)); -- 1/2
+fir_out(09)    <= (result_adder15(13)); -- 1/4
+fir_out(08)    <= (result_adder15(12)); -- 1/8
+fir_out(07)    <= (result_adder15(11)); -- 1/16
+fir_out(06)    <= (result_adder15(10));
+fir_out(05)    <= (result_adder15(09));
+fir_out(04)    <= (result_adder15(08));
+fir_out(03)    <= (result_adder15(07));
+fir_out(02)    <= (result_adder15(06));
+fir_out(01)    <= (result_adder15(05));
+fir_out(00)    <= (result_adder15(04));
 
    process (clock, clear)
 

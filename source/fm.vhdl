@@ -1,4 +1,4 @@
--- $Id: fm.vhdl,v 1.3 2005-03-04 08:06:18 arif_endro Exp $
+-- $Id: fm.vhdl,v 1.4 2005-03-12 04:18:37 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : FM core component
 -- Project     : FM Receiver 
@@ -6,7 +6,7 @@
 -- File        : fm.vhdl
 -- Author      : "Arif E. Nugroho" <arif_endro@yahoo.com>
 -- Created     : 2004/12/06
--- Last update : 2005/01/03 
+-- Last update : 2005/03/11 
 -- Simulators  : 
 -- Synthesizers: 
 -- Target      : 
@@ -113,31 +113,30 @@ offset (2)  <= '0' ;
 offset (1)  <= '0' ;
 offset (0)  <= '0' ;
 
--- The constant that have great effect on the loop
--- it's a 1/16 divider it's has 5 step to change the output state with little
--- oscillation. it's can be make good shape by reducing the constant e.g 1/32
--- but it's has slower response time than 1/16 about 2 times e.g approx 10 step
--- to change the output state. if it's too big e.g (1) then there is no output
--- only oscilation if it's is to small e.g (1/1024) then output never return to
--- zero, so it's didn't change the output state.
+-- The constant that have big effect on the PLL loop.
+-- This constant have big effect on system response, high values. (e.g 1/16),
+-- will make the system have fast response time (e.g. quickly change state).
+-- Otherwise if low values applied to this (e.g 1/32) will make the system
+-- little slow response time but have smooth look's. Change it's as you like
+-- to see the effect's. ^_^
 
 input_nco (17) <= loop_out(11); -- 1
 input_nco (16) <= loop_out(11); -- 1/2
 input_nco (15) <= loop_out(11); -- 1/4
 input_nco (14) <= loop_out(11); -- 1/8
 input_nco (13) <= loop_out(11); -- 1/16
-input_nco (12) <= loop_out(10); -- 1/32
-input_nco (11) <= loop_out(09); -- 1/64
-input_nco (10) <= loop_out(08); -- 1/128
-input_nco (09) <= loop_out(07); -- 1/256
-input_nco (08) <= loop_out(06); -- 1/512
-input_nco (07) <= loop_out(05); -- 1/1024
-input_nco (06) <= loop_out(04);
-input_nco (05) <= loop_out(03);
-input_nco (04) <= loop_out(02);
-input_nco (03) <= loop_out(01);
-input_nco (02) <= loop_out(00);
-input_nco (01) <= loop_out(11);
+input_nco (12) <= loop_out(11); -- 1/32
+input_nco (11) <= loop_out(10); -- 1/64
+input_nco (10) <= loop_out(09); -- 1/128
+input_nco (09) <= loop_out(08); -- 1/256
+input_nco (08) <= loop_out(07); -- 1/512
+input_nco (07) <= loop_out(06); -- 1/1024
+input_nco (06) <= loop_out(05);
+input_nco (05) <= loop_out(04);
+input_nco (04) <= loop_out(03);
+input_nco (03) <= loop_out(02);
+input_nco (02) <= loop_out(01);
+input_nco (01) <= loop_out(00);
 input_nco (00) <= loop_out(11);
 
 -- end divider 
