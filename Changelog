@@ -1,0 +1,11 @@
+[20050103] Clean up all do file
+[20041227] First time working
+[20041221] Fix adder and multiply function
+[20041218] Remove clock signal acros adder component
+	   - Reorganize phase detector
+[20041223] Clean up all comment
+[20041227] Fix conversion between signed to unsigned by 
+	   - shifting 4 bit left
+	   - Finished first level of FM Demodulator
+[20041228] Adder header in each design file.
+	   - rename project directory into fm_receiver

@@ -1,0 +1,6 @@
+$Id: TODO,v 1.1.1.1 2005-01-04 02:05:54 arif_endro Exp $
+
+* Add support to get 8 bit input signal in each clock, 
+  so it's only need 1 bit signal input
+* Make documentations
+* Fix ALLIANCE Makefile

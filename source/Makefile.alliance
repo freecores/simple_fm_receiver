@@ -1,0 +1,68 @@
+# $Id: Makefile.alliance,v 1.1.1.1 2005-01-04 02:05:58 arif_endro Exp $
+# /*--------------------------------------------------------------\
+# | Arif E. Nugroho
+# | [20041201]							  |
+# |								  |
+# |			Variables				  |
+# |								  |
+# \--------------------------------------------------------------*/
+
+ALLIANCE_BIN=$(ALLIANCE_TOP)/bin
+VASY	= $(ALLIANCE_BIN)/vasy		# VHDL Analyzer for synthesis
+ASIMUT	= $(ALLIANCE_BIN)/asimut	# A Simulation tools
+BOOM	= $(ALLIANCE_BIN)/boom		# Boolean Minimization
+BOOG	= $(ALLIANCE_BIN)/boog		# Binding and Optimizing on Gates
+LOON	= $(ALLIANCE_BIN)/loon		# Local optimizer for net
+OCP	= $(ALLIANCE_BIN)/ocp		# Standar cell placer
+NERO	= $(ALLIANCE_BIN)/nero		# Negotiating router
+COUGAR	= $(ALLIANCE_BIN)/cougar	# Hierarchical Netlist Extractor
+LVX	= $(ALLIANCE_BIN)/lvx		# Logical Versus Extracted Netlist
+DRUC	= $(ALLIANCE_BIN)/druc		# Design Rule Checker
+S2R	= $(ALLIANCE_BIN)/s2r		# Process mapping from symbolic layout
+					# to physical layout
+DREAL	= $(ALLIANCE_BIN)/dreal		# Graphic real layout viewer
+GRAAL	= $(ALLIANCE_BIN)/graal		# Symbolic Layout Editor
+XSCH	= $(ALLIANCE_BIN)/xsch		# Graphical Schematic Viewer
+XPAT	= $(ALLIANCE_BIN)/xpat		# Graphical Pattern Viewer
+XFSM	= $(ALLIANCE_BIN)/xfsm		# Graphical FSM Viewer
+
+TOUCH	= touch
+TARGET_LIB	= $(ALLIANCE_TOP)/cells/sxlib
+SPI_MODEL	= $(ALLIANCE_TOP)/etc/spimodel.cfg
+METAL_LEVEL	= 2
+
+# /*------------------------------------------------------------\
+# |								|
+# |				Environment			|
+# |								|
+# \------------------------------------------------------------*/
+
+fm : 
+	$(VASY) -a -B -o -p -I vhdl -H fm
+fm_o : fm
+	$(BOOM) -V -s fm_model
+proof : fm_o fm
+	proof fm_model fm_model_o
+boog : proof
+	$(BOOG) fm_model_o fm_model_x
+loon : boog
+	$(LOON) -x 0 fm_model_x fm_model_o
+flatbeh : loon
+	flatbeh fm_model_o fm_model_f
+proof2 : flatbeh
+	proof fm_model_f fm_model
+ocp : proof2
+	$(OCP) -v -ring fm_model fm_model_o fm_model_p
+nero : ocp
+	$(NERO) -V -3 -p fm_model_p fm_model_o fm_model_o
+druc : nero
+	$(DRUC) fm_model_o
+cougar : druc
+	$(COUGAR) -v -f fm_model_o fm_model_x
+lvx : cougar
+	$(LVX) vst vst fm_model_o fm_model_x
+
+s2r : lvx
+	$(S2R) -r -v fm_model_o fm_model_o
+clean :
+	rm -v -f *.vhd *.vbe *.boom *.pat *.vst *.xsc *.ap *.cif *.drc
