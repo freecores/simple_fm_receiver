@@ -1,4 +1,4 @@
--- $Id: input_fm.vhdl,v 1.1.1.1 2005-01-04 02:05:56 arif_endro Exp $
+-- $Id: input_fm.vhdl,v 1.2 2005-01-07 08:45:59 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Input signal FM
 -- Project     : FM Receiver 
@@ -93,15 +93,15 @@ begin
 --    if (clear = '1') then
 --		counter (09 downto 0) <= (others => B"0000000000");
 --    elsif (((clock = '1') and clock'event) and (not(clear = '1')) then
-    if (((clock = '1') and (not( clear = '1'))) and clock'event) then
+    if (clear = '1') then
+    		counter           <= (others => '0');
+		test_signal_fm    <= (others => '0');
+		test_signal_fmTri <= (others => '0');
+    elsif (((clock = '1') and (not( clear = '1'))) and clock'event) then
 		counter(09 downto 0) <= counter_tmp(09 downto 0);
 		-- clock_out         <= clock;
 		test_signal_fm    <= test_signal_fm_int;
 		test_signal_fmTri <= test_signal_fmTri_int;
-    elsif (clear = '1') then
-    		counter           <= (others => '0');
-		test_signal_fm    <= (others => '0');
-		test_signal_fmTri <= (others => '0');
     end if;
 end process;
 
