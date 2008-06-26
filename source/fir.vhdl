@@ -1,4 +1,4 @@
--- $Id: fir.vhdl,v 1.4 2005-03-12 04:18:38 arif_endro Exp $
+-- $Id: fir.vhdl,v 1.5 2008-06-26 06:16:04 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : FIR Low pass filter
 -- Project     : FM Receiver 
@@ -245,15 +245,21 @@ fir_out(02)    <= (result_adder15(06));
 fir_out(01)    <= (result_adder15(05));
 fir_out(00)    <= (result_adder15(04));
 
-   process (clock, clear)
+-- 20080625
+-- fixme
+-- how to enable clear signal in here... :(
+
+--   process (clock, clear)
+   process (clock)
 
    begin
  
-   if    (clear = '1') then
+--   if    (clear = '1') then
+   if ((clock = '1') and clock'event) then
 
-	dmout     <= (others => '0');
+--	dmout     <= (others => '0');
 
-   elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
+--   elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
 
 	fir_in_02 <= fir_in_01;
 	fir_in_03 <= fir_in_02;

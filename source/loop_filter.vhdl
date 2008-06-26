@@ -1,4 +1,4 @@
--- $Id: loop_filter.vhdl,v 1.3 2005-03-04 08:06:19 arif_endro Exp $
+-- $Id: loop_filter.vhdl,v 1.4 2008-06-26 06:16:04 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Loop filter component
 -- Project     : FM Receiver 
@@ -120,15 +120,21 @@ multiply01 : sub_12bit
 
   loop_out_div <= multiply_output01;
 
-  process (clock, clear)
+-- 20080625
+-- fixme
+-- how to enable clear signal in here... :(
+
+--  process (clock, clear)
+  process (clock)
 
   begin
 
-  if    (clear = '1') then
+--  if    (clear = '1') then
+  if ((clock = '1') and clock'event) then
 
-	loop_out      <= (others => '0');
+--	loop_out      <= (others => '0');
 
-  elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
+--  elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
 
 	-- loop_out (11) <= adder_output01 (12);
 	loop_out (11) <= adder_output01 (11);

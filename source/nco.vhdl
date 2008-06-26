@@ -1,4 +1,4 @@
--- $Id: nco.vhdl,v 1.3 2005-03-04 08:06:20 arif_endro Exp $
+-- $Id: nco.vhdl,v 1.4 2008-06-26 06:16:04 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : NCO (Numerical Controlled Oscillator)
 -- Project     : FM Receiver 
@@ -99,15 +99,21 @@ begin
    address_in (01) <= (adder_output(09));
    address_in (00) <= (adder_output(08));
 
-   process (clock, clear)
+--   process (clock, clear)
+   process (clock)
 
    begin
 
-   if    (clear = '1') then
+-- 20080625
+-- fixme
+-- how to enable clear signal in here... :(
 
-	output_nco      <= (others => '0');
+--   if    (clear = '1') then
+   if ((clock = '1') and clock'event) then
 
-   elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
+--	output_nco      <= (others => '0');
+
+--   elsif (((clock = '1') and (not(clear) = '1')) and clock'event) then
 
 	output_nco (07) <= (output_rom(07));
 	output_nco (06) <= (output_rom(06));
