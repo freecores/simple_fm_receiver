@@ -1,4 +1,4 @@
--- $Id: adder_15bit.vhdl,v 1.3 2005-03-04 08:06:16 arif_endro Exp $
+-- $Id: adder_15bit.vhdl,v 1.4 2008-06-26 06:12:29 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 15 bit
 -- Project     : FM Receiver 
@@ -80,15 +80,17 @@ signal c13 : bit;
 signal c14 : bit;
 signal c15 : bit;
 signal over15 : bit;
-signal adder15_output_int : bit_vector (15 downto 0);
+signal adder15_output_int : bit_vector (14 downto 0);
+signal ov  : bit;
 
 begin
 
 c00 			<= '0';
 over15                  <= (addend_15bit (14) xor augend_15bit (14));
-adder15_output_int (15) <= ((adder15_output_int (14) and over15) or 
+ov                      <= ((adder15_output_int (14) and over15) or 
 			   (c15 and (not (over15))));
-adder15_output          <= adder15_output_int;
+adder15_output(14 downto 00) <= adder15_output_int;
+adder15_output(15)           <= ov;
 
 fa14 : fulladder
    port map (

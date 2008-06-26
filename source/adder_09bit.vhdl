@@ -1,4 +1,4 @@
--- $Id: adder_09bit.vhdl,v 1.3 2005-03-04 08:06:11 arif_endro Exp $
+-- $Id: adder_09bit.vhdl,v 1.4 2008-06-26 06:12:29 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 09 bit
 -- Project     : FM Receiver 
@@ -73,15 +73,17 @@ signal c07 : bit;
 signal c08 : bit;
 signal c09 : bit;
 signal over09 : bit;
-signal adder09_output_int : bit_vector (09 downto 0);
+signal adder09_output_int : bit_vector (08 downto 0);
+signal ov  : bit ;
 
 begin
 
 c00                     <= '0';
 over09                  <= (addend_09bit (08) xor augend_09bit (08));
-adder09_output_int (09) <= ((adder09_output_int (08) and over09) or 
+ov                      <= ((adder09_output_int (08) and over09) or 
 			   (c09 and (not (over09))));
-adder09_output          <= adder09_output_int;
+adder09_output(08 downto 00) <= adder09_output_int;
+adder09_output(09)           <= ov;
 
 fa08 : fulladder
    port map (

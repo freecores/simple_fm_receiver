@@ -1,4 +1,4 @@
--- $Id: adder_11bit.vhdl,v 1.3 2005-03-04 08:06:12 arif_endro Exp $
+-- $Id: adder_11bit.vhdl,v 1.4 2008-06-26 06:12:29 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 11 bit
 -- Project     : FM Receiver 
@@ -76,15 +76,17 @@ signal c09 : bit;
 signal c10 : bit;
 signal c11 : bit;
 signal over11 : bit;
-signal adder11_output_int : bit_vector (11 downto 0);
+signal adder11_output_int : bit_vector (10 downto 0);
+signal ov  : bit;
 
 begin
 
 c00                     <= '0';
 over11                  <= (addend_11bit (10) xor augend_11bit (10));
-adder11_output_int (11) <= ((adder11_output_int (10) and over11) or 
+ov                      <= ((adder11_output_int (10) and over11) or 
 			   (c11 and (not (over11))));
-adder11_output          <= adder11_output_int;
+adder11_output(10 downto 00) <= adder11_output_int;
+adder11_output(11)           <= ov;
 
 fa10 : fulladder
    port map (

@@ -1,4 +1,4 @@
--- $Id: adder_12bit.vhdl,v 1.3 2005-03-04 08:06:13 arif_endro Exp $
+-- $Id: adder_12bit.vhdl,v 1.4 2008-06-26 06:12:29 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 12 bit
 -- Project     : FM Receiver 
@@ -64,7 +64,7 @@ architecture structural of adder_12bit is
 
 -- internal signal
 signal over12 : bit;
-signal adder12_output_int : bit_vector (12 downto 0);
+signal adder12_output_int : bit_vector (11 downto 0);
 signal c00 : bit;
 signal c01 : bit;
 signal c02 : bit;
@@ -78,14 +78,16 @@ signal c09 : bit;
 signal c10 : bit;
 signal c11 : bit;
 signal c12 : bit;
+signal ov  : bit;
 
 begin
 
 c00 			<= '0';
 over12                  <= (addend_12bit (11) xor augend_12bit (11));
-adder12_output_int (12) <= ((adder12_output_int (11) and over12) or 
+ov                      <= ((adder12_output_int (11) and over12) or 
 			   (c12 and (not (over12))));
-adder12_output          <= adder12_output_int;
+adder12_output(11 downto 00) <= adder12_output_int;
+adder12_output(12)           <= ov;
 
 fa11 : fulladder
    port map (

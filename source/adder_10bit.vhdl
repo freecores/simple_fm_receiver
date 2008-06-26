@@ -1,4 +1,4 @@
--- $Id: adder_10bit.vhdl,v 1.3 2005-03-04 08:06:12 arif_endro Exp $
+-- $Id: adder_10bit.vhdl,v 1.4 2008-06-26 06:12:29 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 10 bit
 -- Project     : FM Receiver 
@@ -74,15 +74,17 @@ signal c08 : bit;
 signal c09 : bit;
 signal c10 : bit;
 signal over10 : bit;
-signal adder10_output_int : bit_vector (10 downto 0);
+signal adder10_output_int : bit_vector (09 downto 0);
+signal ov  : bit;
 
 begin
 
 c00                     <= '0';
 over10                  <= (addend_10bit (09) xor augend_10bit (09));
-adder10_output_int (10) <= ((adder10_output_int (09) and over10) or 
+ov                      <= ((adder10_output_int (09) and over10) or 
 			   (c10 and (not (over10))));
-adder10_output          <= adder10_output_int;
+adder10_output(09 downto 00) <= adder10_output_int;
+adder10_output(10)           <= ov;
 
 fa09 : fulladder
    port map (

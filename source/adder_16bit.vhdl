@@ -1,4 +1,4 @@
--- $Id: adder_16bit.vhdl,v 1.3 2005-03-04 08:06:16 arif_endro Exp $
+-- $Id: adder_16bit.vhdl,v 1.4 2008-06-26 06:12:29 arif_endro Exp $
 -------------------------------------------------------------------------------
 -- Title       : Adder 16 bit
 -- Project     : FM Receiver 
@@ -81,15 +81,17 @@ signal c14 : bit;
 signal c15 : bit;
 signal c16 : bit;
 signal over16 : bit;
-signal adder16_output_int : bit_vector (16 downto 0);
+signal adder16_output_int : bit_vector (15 downto 0);
+signal ov  : bit;
 
 begin
 
 c00 			<= '0';
 over16                  <= (addend_16bit (15) xor augend_16bit (15));
-adder16_output_int (16) <= ((adder16_output_int (15) and over16) or 
+ov                      <= ((adder16_output_int (15) and over16) or 
 			   (c16 and (not (over16))));
-adder16_output          <= adder16_output_int;
+adder16_output(15 downto 00) <= adder16_output_int;
+adder16_output(16)           <= ov;
 
 fa15 : fulladder
    port map (
