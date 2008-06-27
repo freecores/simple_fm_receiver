@@ -1,7 +1,4 @@
-$Id: TODO,v 1.2 2005-03-04 08:03:11 arif_endro Exp $
+$Id: TODO,v 1.3 2008-06-27 03:53:55 arif_endro Exp $
 
-* Add support to get 8 bit input signal in each clock, 
-  so it's only need 1 bit signal input
-* Fix ALLIANCE Makefile
 * Change adder implementation (e.g. not using simple carry adder)
 * Change multiplication implementation (this implementation is slow :( )
